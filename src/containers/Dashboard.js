@@ -14,7 +14,7 @@ export const filteredBills = (data, status) => {
         if (typeof jest !== 'undefined') {
           selectCondition = bill.status === status;
         } else {
-        /* istanbul ignore next */
+          /* istanbul ignore next */
           // in prod environment
           const userEmail = JSON.parse(localStorage.getItem('user')).email;
           selectCondition =
@@ -95,25 +95,50 @@ export default class {
   };
 
   handleEditTicket(e, bill, bills) {
+    console.log('----------------handleEditTicket--------------------');
+    // console.log('----------------initialization--------------------');
+    // console.log('e', e);
+    console.log('this.counter', this.counter);
+    console.log('this.id', this.id);
+    console.log('bill.id', bill.id);
+
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0;
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id;
+    // console.log('----------------after functions--------------------');
+    // console.log('this.counter', this.counter);
+    // console.log('this.id', this.id);
+    // console.log('bill.id', bill.id);
+
     if (this.counter % 2 === 0) {
+      console.log('--------> image affichée');
       bills.forEach((b) => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' });
+        // console.log('--------> b', b);
       });
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' });
       $('.dashboard-right-container div').html(DashboardFormUI(bill));
       $('.vertical-navbar').css({ height: '150vh' });
       this.counter++;
+      // console.log('----------------after modulo function--------------------');
+      // console.log('this.counter', this.counter);
+      // console.log('this.id', this.id);
+      // console.log('bill.id', bill.id);
     } else {
+      console.log('handleEditTicket in else -> coucou BigBilledIcon');
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' });
 
       $('.dashboard-right-container div').html(`
         <div id="big-billed-icon" data-testid="big-billed-icon"> ${BigBilledIcon} </div>
       `);
       $('.vertical-navbar').css({ height: '120vh' });
+      console.log('----------------BigBilledIcon--------------------');
+      console.log('this.counter', this.counter);
+      console.log('this.id', this.id);
+      console.log('bill.id', bill.id);
       this.counter++;
     }
+    console.log('----------------------------------------------------');
+
     $('#icon-eye-d').click(this.handleClickIconEye);
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill));
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill));
@@ -140,6 +165,7 @@ export default class {
   };
 
   handleShowTickets(e, bills, index) {
+    let countEvent = 0;
     if (this.counter === undefined || this.index !== index) this.counter = 0;
     if (this.index === undefined || this.index !== index) this.index = index;
     if (this.counter % 2 === 0) {
@@ -154,12 +180,20 @@ export default class {
       this.counter++;
     }
 
-    bills.forEach((bill) => {
-      $(`#open-bill${bill.id}`).click((e) =>
-        this.handleEditTicket(e, bill, bills)
-      );
-    });
+    //Debugging the dashboard
+    let getStatusContainer = getStatus(index);
 
+    bills.forEach((bill) => {
+      let getStatusbill = bill.status;
+      if (bill.status === null) getStatusbill = 'pending';
+      if (getStatusbill === getStatusContainer) {
+        $(`#open-bill${bill.id}`).click(
+          (
+            e // eventlistener in double or triple
+          ) => this.handleEditTicket(e, bill, bills)
+        );
+      }
+    });
     return bills;
   }
 

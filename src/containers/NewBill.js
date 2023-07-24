@@ -19,13 +19,14 @@ export default class NewBill {
   }
   handleChangeFile = (e) => {
     e.preventDefault();
-    // const file = this.document.querySelector(`input[data-testid="file"]`)
-    //   .files[0];
+    const file1 = this.document.querySelector(`input[data-testid="file"]`).files[0];
+    console.log("file1 ", file1)
     // const filePath = e.target.value.split(/\\/g);
     // const fileName = filePath[filePath.length - 1];
 
     //Modification de l'input select
     const file = e.target.files[0];
+    console.log("file ", file)
     const fileName = e.target.files[0].name;
     const fileFormat = fileName.substring(fileName.lastIndexOf('.'));
     const champFile = e.target;

@@ -29,7 +29,10 @@ describe('Given I am connected as an employee', () => {
       window.onNavigate(ROUTES_PATH.Bills);
       await waitFor(() => screen.getByTestId('icon-window'));
       const windowIcon = screen.getByTestId('icon-window');
-      //to-do write expect expression
+
+      const windowIconClass = windowIcon.classList.contains('active-icon');
+      console.log('windowIconClass', windowIconClass);
+      expect(windowIconClass).toBeTruthy();
     });
 
     test('Then bills should be ordered from earliest to latest', () => {
@@ -43,7 +46,6 @@ describe('Given I am connected as an employee', () => {
       const antiChrono = (a, b) => (a < b ? 1 : -1);
       const datesSorted = [...dates].sort(antiChrono);
       console.log('datesSorted ', datesSorted);
-      // expect(dates).toEqual(datesSorted);
       expect(dates).toEqual(datesSorted);
     });
   });

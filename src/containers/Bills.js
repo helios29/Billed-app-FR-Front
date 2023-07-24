@@ -24,7 +24,7 @@ export default class {
     this.onNavigate(ROUTES_PATH['NewBill']);
   };
 
-  handleClickIconEye = (icon) => {
+  handleClickIconEye = (icon) => { //Has been called 
     const billUrl = icon.getAttribute('data-bill-url');
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5);
     $('#modaleFile')
@@ -60,34 +60,25 @@ export default class {
               };
             }
           });
-          console.log('bills', [...bills]);
-          bills.forEach(bill => {
-            console.log(bill.date)
-          })
+          // console.log('bills', [...bills]);
+        
           // let a = '';
           // bills.forEach((bill) => {
           //     a = bill.date + '\n';
           //     console.log(a)
           //   });
 
-          bills.sort(function(a,b){
+          bills.sort(function (a, b) {
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
             return new Date(b.date) - new Date(a.date);
           });
-          console.log('bills ', bills);
-          bills.forEach(bill => {
-            console.log(bill.date)
-          })
+       
 
           const antiChrono = (a, b) => (a < b ? 1 : -1);
           const datesSorted = [...bills].sort(antiChrono);
-         
-          console.log('datesSorted ', datesSorted);
 
-          datesSorted.forEach(date => {
-            console.log(date.date)
-          })
+          // console.log('datesSorted ', datesSorted);
 
           return datesSorted;
         });
